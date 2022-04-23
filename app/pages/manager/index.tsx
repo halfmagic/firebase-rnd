@@ -9,6 +9,8 @@ const ManagerIndex: NextPage = ({ fb }: any) => {
 
   useEffect(() => {
     getOrders(db).then((data: any) => {
+      console.log(data)
+
       setOrders(data)
     })
   }, [])
