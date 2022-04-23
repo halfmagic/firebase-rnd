@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/nanoid": "^3.0.0",
     "firebase": "^9.6.11",
+    "nanoid": "^3.3.3",
     "next": "12.1.5",
     "react": "18.0.0",
     "react-dom": "18.0.0"

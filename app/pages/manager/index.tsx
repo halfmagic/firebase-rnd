@@ -1,7 +1,7 @@
-import { getFirestore } from 'firebase/firestore/lite'
+import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import { getOrders } from '../../src/firebase/useFirebase'
+import { getOrders } from '../../src/firebase/order.service'
 
 const ManagerIndex: NextPage = ({ fb }: any) => {
   const db = getFirestore(fb)
@@ -15,12 +15,27 @@ const ManagerIndex: NextPage = ({ fb }: any) => {
     })
   }, [])
 
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, 'orders'), (snapshot) => {
+      const data: any[] = []
+      snapshot.forEach((doc: any) => {
+        data.push(doc.data())
+      })
+      setOrders(data)
+    })
+  }, [])
+
   return (
     <>
       <h1>hello world</h1>
       <ul>
         {orders.map((order: any, i: number) => {
-          return <li key={i}>{order.status}</li>
+          return (
+            <li key={i}>
+              <h3>Status: {order.status}</h3>
+              <h3>User: {order.user_address}</h3>
+            </li>
+          )
         })}
       </ul>
     </>
